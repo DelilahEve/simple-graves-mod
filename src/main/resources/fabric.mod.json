@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "gravestones",
-  "version": "${0.5}",
+  "version": "${0.6}",
 
   "name": "Simple Gravestones",
   "description": "Adds gravestones when you die, which store your items",
