@@ -1,6 +1,6 @@
 # Lilah's Simple Graves
 
-Adds graves that spawn when you die. They store your items upon death.
+Adds graves that spawn when you die. They store your items upon death. Including trinkets.
 
 ![Showcase Gravestone](https://github.com/DelilahEve/simple-graves-mod/blob/master/images/Showcase.jpg)
 

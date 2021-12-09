@@ -1,5 +1,6 @@
 package io.delilaheve.simplegraves.mixin;
 
+import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import io.delilaheve.simplegraves.SimpleGravestones;
 import io.delilaheve.simplegraves.registry.GravestoneBlock;
@@ -27,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin{
@@ -69,13 +71,12 @@ public abstract class LivingEntityMixin{
 
                 // Store all trinkets and inventory items
                 List<ItemStack> extras = new ArrayList<>();
-                // ToDo: This didn't work, needs reassessing
-//                TrinketsApi.getTrinketComponent(player)
-//                    .ifPresent(
-//                        component -> component.getAllEquipped().forEach(
-//                            pair -> extras.add(pair.getRight())
-//                        )
-//                    );
+                Optional<TrinketComponent> trinkets = TrinketsApi.getTrinketComponent(player);
+                trinkets.ifPresent(
+                    component -> component.getAllEquipped().forEach(
+                        pair -> extras.add(pair.getRight())
+                    )
+                );
                 swapInventory(player, extras, (Inventory) thisWorld.getBlockEntity(blockPos));
 
                 // Create entity to store experience and player info
@@ -107,15 +108,21 @@ public abstract class LivingEntityMixin{
      * @param targetInv inventory to put items in
      */
     private void swapInventory(PlayerEntity player, List<ItemStack> extras, Inventory targetInv){
-        int i = 0;
-        int playerInvSize = player.getInventory().size();
-        while (i < playerInvSize && i < targetInv.size()) {
-            targetInv.setStack(i, player.getInventory().getStack(i));
-            i++;
-        }
-        while (i < (playerInvSize + extras.size()) && i < targetInv.size()) {
-            targetInv.setStack(i, extras.get(i));
-            i++;
+        try {
+            int i = 0;
+            int playerInvSize = player.getInventory().size();
+            while (i < playerInvSize && i < targetInv.size()) {
+                targetInv.setStack(i, player.getInventory().getStack(i));
+                i++;
+            }
+            int j = 0;
+            while (j  < extras.size() && i < targetInv.size()) {
+                targetInv.setStack(i, extras.get(j));
+                j++;
+                i++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

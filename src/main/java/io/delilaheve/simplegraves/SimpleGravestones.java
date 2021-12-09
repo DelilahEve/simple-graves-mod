@@ -1,5 +1,6 @@
 package io.delilaheve.simplegraves;
 
+import dev.emi.trinkets.api.event.TrinketDropCallback;
 import io.delilaheve.simplegraves.config.SimpleConfig;
 import io.delilaheve.simplegraves.registry.ModBlocks;
 import io.delilaheve.simplegraves.registry.ModItems;
@@ -54,6 +55,7 @@ public class SimpleGravestones implements ModInitializer {
     public void onInitialize() {
         ModItems.registerItems();
         ModBlocks.registerBlocks();
+        TrinketDropCallback.EVENT.register(new TrinketDropHandler());
     }
 
     /**
@@ -83,46 +85,41 @@ public class SimpleGravestones implements ModInitializer {
             defaultReplaceBlocks.add("end_stone");
             defaultReplaceBlocks.add("podzol");
         }
-        try {
-            String defaultReplaceBlocksString = String.join(",", defaultReplaceBlocks);
-            return "# A list of blocks by name that the gravestone can/can't replace\n" +
-                    "# Accepted values: block identifiers (if prefix is excluded minecraft: will be assumed)\n" +
-                    "# Default:" + defaultReplaceBlocksString + "\n" +
-                    replaceBlocksKey + "=" + defaultReplaceBlocksString + "\n" +
-                    "\n" +
-                    "# Whether the above list should be treated as a whitelist or a blacklist\n" +
-                    "# Accepted values: whitelist, blacklist\n" +
-                    "# Default:" + defaultListMode + "\n" +
-                    listModeKey + "=" + defaultListMode + "\n" +
-                    "\n" +
-                    "# Whether the replace list should be ignored and allow any block to be replaced\n" +
-                    "# WARNING: This setting will cause ANY block to be replaced with discrimination\n" +
-                    "# Accepted values: true, false\n" +
-                    "# Default:" + defaultReplaceAny + "\n" +
-                    replaceAnyKey + "=" + defaultReplaceAny + "\n" +
-                    "\n" +
-                    "# Radius to search for a valid grave placement\n" +
-                    "# A larger radius can mean slower grave spawning\n" +
-                    "# This only affects horizontal radius, vertical is full world height\n" +
-                    "# Accepted values: positive integer between " + minSearchRadius + " and " + maxSearchRadius + "\n" +
-                    "# Default:" + defaultSearchRadius + "\n" +
-                    searchRadiusKey + "=" + defaultSearchRadius + "\n" +
-                    "\n" +
-                    "# Maximum slots to save in a grave\n" +
-                    "# Accepted values: positive integer between " + minGraveSlots + " and " + maxGraveSlots + "\n" +
-                    "# Default: " + defaultGraveSlots + "\n" +
-                    graveSlotsKey + "=" + defaultGraveSlots + "\n" +
-                    "\n" +
-                    "# Default height to fallback to when an appropriate place to spawn the grave can't be found\n" +
-                    "# WARNING: Setting this above 128 can cause graves to be placed above the nether roof\n" +
-                    "# Accepted values: positive integer between " + minFallbackHeight + " and " + maxFallbackHeight +
-                    "\n" +
-                    "# Default: " + defaultFallbackHeight + "\n" +
-                    fallbackHeightKey + "=" + defaultFallbackHeight;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
+        String defaultReplaceBlocksString = String.join(",", defaultReplaceBlocks);
+        return "# A list of blocks by name that the gravestone can/can't replace\n" +
+                "# Accepted values: block identifiers (if prefix is excluded minecraft: will be assumed)\n" +
+                "# Default:" + defaultReplaceBlocksString + "\n" +
+                replaceBlocksKey + "=" + defaultReplaceBlocksString + "\n" +
+                "\n" +
+                "# Whether the above list should be treated as a whitelist or a blacklist\n" +
+                "# Accepted values: whitelist, blacklist\n" +
+                "# Default:" + defaultListMode + "\n" +
+                listModeKey + "=" + defaultListMode + "\n" +
+                "\n" +
+                "# Whether the replace list should be ignored and allow any block to be replaced\n" +
+                "# WARNING: This setting will cause ANY block to be replaced with discrimination\n" +
+                "# Accepted values: true, false\n" +
+                "# Default:" + defaultReplaceAny + "\n" +
+                replaceAnyKey + "=" + defaultReplaceAny + "\n" +
+                "\n" +
+                "# Radius to search for a valid grave placement\n" +
+                "# A larger radius can mean slower grave spawning\n" +
+                "# This only affects horizontal radius, vertical is full world height\n" +
+                "# Accepted values: positive integer between " + minSearchRadius + " and " + maxSearchRadius + "\n" +
+                "# Default:" + defaultSearchRadius + "\n" +
+                searchRadiusKey + "=" + defaultSearchRadius + "\n" +
+                "\n" +
+                "# Maximum slots to save in a grave\n" +
+                "# Accepted values: positive integer between " + minGraveSlots + " and " + maxGraveSlots + "\n" +
+                "# Default: " + defaultGraveSlots + "\n" +
+                graveSlotsKey + "=" + defaultGraveSlots + "\n" +
+                "\n" +
+                "# Default height to fallback to when an appropriate place to spawn the grave can't be found\n" +
+                "# WARNING: Setting this above 128 can cause graves to be placed above the nether roof\n" +
+                "# Accepted values: positive integer between " + minFallbackHeight + " and " + maxFallbackHeight +
+                "\n" +
+                "# Default: " + defaultFallbackHeight + "\n" +
+                fallbackHeightKey + "=" + defaultFallbackHeight;
     }
 
     /**
