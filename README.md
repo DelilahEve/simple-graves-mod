@@ -1,4 +1,4 @@
-# Simple Graves Mod
+# Lilah's Simple Graves
 
 Adds graves that spawn when you die. They store your items upon death.
 
