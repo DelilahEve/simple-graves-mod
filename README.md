@@ -2,10 +2,7 @@
 
 Adds graves that spawn when you die. They store your items upon death.
 
-![Showcase Gravestone](https://github.com/Speechrezz/simple-graves-mod/blob/master/images/Showcase.jpg)
-
-## To-do:
-- Add support for [trinkets/rings](https://www.curseforge.com/minecraft/mc-mods/trinkets-fabric "Trinkets (fabric)")
+![Showcase Gravestone](https://github.com/DelilahEve/simple-graves-mod/blob/master/images/Showcase.jpg)
 
 ## License
 

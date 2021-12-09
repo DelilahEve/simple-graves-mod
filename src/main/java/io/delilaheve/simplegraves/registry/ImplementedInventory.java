@@ -1,4 +1,4 @@
-package com.speechrezz.simple_gravestones.registry;
+package io.delilaheve.simplegraves.registry;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
@@ -18,20 +18,6 @@ public interface ImplementedInventory extends Inventory {
      * Must return the same instance every time it's called.
      */
     DefaultedList<ItemStack> getItems();
-
-    /**
-     * Creates an inventory from the item list.
-     */
-    static ImplementedInventory of(DefaultedList<ItemStack> items) {
-        return () -> items;
-    }
-
-    /**
-     * Creates a new inventory with the specified size.
-     */
-    static ImplementedInventory ofSize(int size) {
-        return of(DefaultedList.ofSize(size, ItemStack.EMPTY));
-    }
 
     /**
      * Returns the inventory size.

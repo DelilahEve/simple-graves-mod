@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "facing=south": {
+      "model": "lilysgraves:block/gravestone_block"
+    },
+    "facing=west": {
+      "model": "lilysgraves:block/gravestone_block",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "lilysgraves:block/gravestone_block",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "lilysgraves:block/gravestone_block",
+      "y": 270
+    }
+  }
+}
+
+

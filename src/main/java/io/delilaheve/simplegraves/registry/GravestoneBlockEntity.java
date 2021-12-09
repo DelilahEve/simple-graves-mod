@@ -1,5 +1,6 @@
-package com.speechrezz.simple_gravestones.registry;
+package io.delilaheve.simplegraves.registry;
 
+import io.delilaheve.simplegraves.SimpleGravestones;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
@@ -10,15 +11,16 @@ import net.minecraft.util.math.BlockPos;
 
 public class GravestoneBlockEntity extends BlockEntity implements ImplementedInventory {
 
-    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(50, ItemStack.EMPTY);
+    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(
+        SimpleGravestones.getGraveSlots(),
+        ItemStack.EMPTY
+    );
     private int experience = 0;
     private String playerName = "null";
 
     public GravestoneBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlocks.GRAVE_BLOCK_ENTITY, pos, state);
     }
-
-    //From the ImplementedInventory Interface
 
     @Override
     public DefaultedList<ItemStack> getItems() {
@@ -28,36 +30,30 @@ public class GravestoneBlockEntity extends BlockEntity implements ImplementedInv
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        Inventories.readNbt(nbt, this.inventory);
-        this.experience = nbt.getInt("Experience");
-        this.playerName = nbt.getString("PlayerName");
+        Inventories.readNbt(nbt, inventory);
+        experience = nbt.getInt("Experience");
+        playerName = nbt.getString("PlayerName");
     }
 
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        Inventories.writeNbt(nbt, this.inventory);
-        nbt.putInt("Experience", this.experience);
-        nbt.putString("PlayerName", this.playerName);
-        //nbt.putUuid("PlayerUUID", this.playerUUID);
+        Inventories.writeNbt(nbt, inventory);
+        nbt.putInt("Experience", experience);
+        nbt.putString("PlayerName", playerName);
         return nbt;
     }
 
     public void setExperience(int exp){
-        this.experience = exp;
-        //System.out.println("DEBUG - GravestoneBlockEntity's Exp: "+ experience);
+        experience = exp;
     }
 
     public int getExperience(){
-        return this.experience;
-    }
-
-
-    public String getPlayerName() {
-        return playerName;
+        return experience;
     }
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
+
 }
